@@ -1,4 +1,3 @@
-
 package model;
 
 import java.util.Date;
@@ -18,6 +17,12 @@ public class Project {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
+    //Construtor para setar data inicial ao createdAt       
+     public Project () {
+        this.createdAt = new Date();
+        this.updatedAt = new Date();
+    }
+    
 
     public int getId() {
         return id;
@@ -61,6 +66,8 @@ public class Project {
 
     @Override
     public String toString() {
-        return "Project{" + "id=" + id + ", name=" + name + ", description=" + description + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + '}';
+        return this.name;
     }
 }
+
+
