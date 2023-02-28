@@ -8,9 +8,13 @@ import controller.ProjectController;
 import controller.TaskController;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import model.Project;
+import model.Task;
+import util.TaskTableModel;
 
 /**
  *
@@ -19,16 +23,19 @@ import model.Project;
 public class MainScreen extends javax.swing.JFrame {
 
     ProjectController projectController;
-    TaskController TaskController;
+    TaskController taskController;
     
     // parte visual do meu componente
     // vou carregar meu projetos no bd para dentro dele
     DefaultListModel projectModel;
     
+    TaskTableModel taskModel;
+    
     
     public MainScreen() {
         initComponents();
         decorateTableTask();
+        
         initDataController();
         initComponetsModel();
     }
@@ -264,7 +271,13 @@ public class MainScreen extends javax.swing.JFrame {
         jTableTasks.setGridColor(new java.awt.Color(255, 255, 255));
         jTableTasks.setRowHeight(50);
         jTableTasks.setSelectionBackground(new java.awt.Color(153, 255, 153));
+        jTableTasks.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jTableTasks.setShowGrid(false);
+        jTableTasks.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableTasksMouseClicked(evt);
+            }
+        });
         jScrollPaneTasks.setViewportView(jTableTasks);
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
@@ -317,6 +330,16 @@ public class MainScreen extends javax.swing.JFrame {
         // TODO add your handling code here:
         ProjectDialogScreen projectDialogScreen = new ProjectDialogScreen(this, rootPaneCheckingEnabled);
         projectDialogScreen.setVisible(true);
+        
+        // Adicionando um ouvinte no nosso componente
+        projectDialogScreen.addWindowListener(new WindowAdapter() { // um objeto e instaciando ele
+            // quando a janela for fechada, vai atualizar a lista de projetos
+            // e trazer os projetos do bd
+            public void windowClosed(WindowEvent e) {
+                loadProjects();
+            }
+        
+        });
     }//GEN-LAST:event_jLabelProjectsAddMouseClicked
 
     private void jLabelTasksAddMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelTasksAddMouseClicked
@@ -326,6 +349,28 @@ public class MainScreen extends javax.swing.JFrame {
         //taskdDialogScreen.setProject(null);
         taskdDialogScreen.setVisible(true);
     }//GEN-LAST:event_jLabelTasksAddMouseClicked
+
+    private void jTableTasksMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableTasksMouseClicked
+        // TODO add your handling code here:
+        // vai me dizer qual a linha com base em um ponto
+        // e vai nos dizer em qual linha ocorreu o clique (evento)
+        // e qual a coluna
+        int rowIndex = jTableTasks.rowAtPoint(evt.getPoint());
+        int columnIndex = jTableTasks.columnAtPoint(evt.getPoint());
+        
+        switch(columnIndex) {
+            // quando o evento ocorrer na coluna 3
+            case 3:
+                // aqui vamos buscar a tarefa da linha que foi clicada
+                Task task = taskModel.getTasks().get(rowIndex);
+                taskController.update(task);
+                break;
+            case 4:
+                break;
+            case 5:
+                break;    
+        }
+    }//GEN-LAST:event_jTableTasksMouseClicked
 
     /**
      * @param args the command line arguments
@@ -396,7 +441,7 @@ public class MainScreen extends javax.swing.JFrame {
     
     public void initDataController() {
         projectController = new ProjectController();
-        TaskController = new TaskController();
+        taskController = new TaskController();
     }
     
     public void initComponetsModel() {
@@ -406,6 +451,17 @@ public class MainScreen extends javax.swing.JFrame {
         // e colocar dentro desse project model
         loadProjects();
         
+        taskModel = new TaskTableModel();
+        jTableTasks.setModel(taskModel);
+        loadTasks(4);
+        
+    }
+    
+    public void loadTasks(int idProject) { // vai carregar nossas tarefas e vai exibir na nossa table
+        List<Task> tasks = taskController.getAll(idProject);
+        // método de carregar as tarefas
+        taskModel.setTasks(tasks);
+    
     }
     
     public void loadProjects() {
@@ -415,13 +471,11 @@ public class MainScreen extends javax.swing.JFrame {
         // quero limpar minha lista
         projectModel.clear();
         
-        for (int i = 0; i < projects.size() - 1; i++) {
+        for (int i = 0; i < projects.size(); i++) {
             
            Project project = projects.get(i);
-            
-            projectModel.addElement(project);
+           projectModel.addElement(project);
         }
-        
         jListProjects.setModel(projectModel);
     }
 }
