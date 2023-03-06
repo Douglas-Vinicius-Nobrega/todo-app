@@ -38,7 +38,7 @@ public class ProjectDialogScreen extends javax.swing.JDialog {
 
         jPanelToolBar = new javax.swing.JPanel();
         jLabelToolBarTitle = new javax.swing.JLabel();
-        jLabelToolBarSafe = new javax.swing.JLabel();
+        jLabelToolBarSave = new javax.swing.JLabel();
         jPanelProject = new javax.swing.JPanel();
         jLabelName = new javax.swing.JLabel();
         jTextFieldName = new javax.swing.JTextField();
@@ -54,11 +54,11 @@ public class ProjectDialogScreen extends javax.swing.JDialog {
         jLabelToolBarTitle.setForeground(java.awt.Color.white);
         jLabelToolBarTitle.setText("Projeto");
 
-        jLabelToolBarSafe.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelToolBarSafe.setIcon(new javax.swing.ImageIcon(getClass().getResource("/check.png"))); // NOI18N
-        jLabelToolBarSafe.addMouseListener(new java.awt.event.MouseAdapter() {
+        jLabelToolBarSave.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelToolBarSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/check.png"))); // NOI18N
+        jLabelToolBarSave.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabelToolBarSafeMouseClicked(evt);
+                jLabelToolBarSaveMouseClicked(evt);
             }
         });
 
@@ -70,7 +70,7 @@ public class ProjectDialogScreen extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(jLabelToolBarTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabelToolBarSafe, javax.swing.GroupLayout.DEFAULT_SIZE, 64, Short.MAX_VALUE)
+                .addComponent(jLabelToolBarSave, javax.swing.GroupLayout.DEFAULT_SIZE, 64, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanelToolBarLayout.setVerticalGroup(
@@ -80,7 +80,7 @@ public class ProjectDialogScreen extends javax.swing.JDialog {
                 .addGroup(jPanelToolBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabelToolBarTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanelToolBarLayout.createSequentialGroup()
-                        .addComponent(jLabelToolBarSafe, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
+                        .addComponent(jLabelToolBarSave, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
                         .addContainerGap())))
         );
 
@@ -153,21 +153,29 @@ public class ProjectDialogScreen extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jLabelToolBarSafeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelToolBarSafeMouseClicked
+    private void jLabelToolBarSaveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelToolBarSaveMouseClicked
         // TODO add your handling code here:
       try {
-        Project project = new Project();
-        // getText() = vai pegar o texto que o usuário digitou
-        project.setName(jTextFieldName.getText());
-        project.setDescription(jTextAreaDescription.getText());
-        controller.save(project);
-        JOptionPane.showMessageDialog(rootPane, "Projeto salvo com sucesso");
+          // se o nome for diferente de vázio
+          if(!jTextFieldName.getText().isEmpty() 
+                &&  !jTextAreaDescription.getText().isEmpty()) {
+            // cria um objeto de projeto
+            Project project = new Project();
+            // getText() = vai pegar o texto que o usuário digitou
+            project.setName(jTextFieldName.getText());
+            project.setDescription(jTextAreaDescription.getText());
+            controller.save(project);
+            JOptionPane.showMessageDialog(rootPane, "Projeto salvo com sucesso"); 
+            this.dispose();
+          } else {
+            JOptionPane.showMessageDialog(rootPane, "O projeto não foi "
+                    + "salvo, pois campo nome, não foi preenchido! ");
+          }
       } catch (Exception ex) {
           // se houver erro, vai mostrar uma notificação com o erro para o usuário
           JOptionPane.showMessageDialog(rootPane, ex.getMessage());
       }
-      this.dispose();
-    }//GEN-LAST:event_jLabelToolBarSafeMouseClicked
+    }//GEN-LAST:event_jLabelToolBarSaveMouseClicked
 
     /**
      * @param args the command line arguments
@@ -214,7 +222,7 @@ public class ProjectDialogScreen extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabelDescription;
     private javax.swing.JLabel jLabelName;
-    private javax.swing.JLabel jLabelToolBarSafe;
+    private javax.swing.JLabel jLabelToolBarSave;
     private javax.swing.JLabel jLabelToolBarTitle;
     private javax.swing.JPanel jPanelProject;
     private javax.swing.JPanel jPanelToolBar;

@@ -60,7 +60,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jLabelToolBarTitle" min="-2" pref="300" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="jLabelToolBarSafe" pref="64" max="32767" attributes="0"/>
+                  <Component id="jLabelToolBarSave" pref="64" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -72,7 +72,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jLabelToolBarTitle" max="32767" attributes="0"/>
                       <Group type="102" attributes="0">
-                          <Component id="jLabelToolBarSafe" pref="49" max="32767" attributes="0"/>
+                          <Component id="jLabelToolBarSave" pref="49" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -92,7 +92,7 @@
             <Property name="text" type="java.lang.String" value="Projeto"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabelToolBarSafe">
+        <Component class="javax.swing.JLabel" name="jLabelToolBarSave">
           <Properties>
             <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
@@ -100,7 +100,7 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabelToolBarSafeMouseClicked"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabelToolBarSaveMouseClicked"/>
           </Events>
         </Component>
       </SubComponents>
