@@ -14,6 +14,8 @@ import java.util.List;
 import javax.swing.DefaultListModel;
 import model.Project;
 import model.Task;
+import util.ButtonColumnCellRederer;
+import util.DeadlineColumnCellRederer;
 import util.TaskTableModel;
 
 /**
@@ -33,11 +35,17 @@ public class MainScreen extends javax.swing.JFrame {
     
     
     public MainScreen() {
+        // criando nossos componentes
         initComponents();
-        decorateTableTask();
         
+        
+        // criando os controladores
         initDataController();
+        // criando os models
         initComponetsModel();
+        
+        // customizador da nossa tabela
+        decorateTableTask();
     }
 
     /**
@@ -246,6 +254,7 @@ public class MainScreen extends javax.swing.JFrame {
 
         jPanel7.setBackground(new java.awt.Color(255, 255, 255));
         jPanel7.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel7.setLayout(new java.awt.BorderLayout());
 
         jPanelEmptyList.setBackground(java.awt.Color.white);
 
@@ -285,26 +294,7 @@ public class MainScreen extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
-        jPanel7.setLayout(jPanel7Layout);
-        jPanel7Layout.setHorizontalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 338, Short.MAX_VALUE)
-            .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel7Layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jPanelEmptyList, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
-        );
-        jPanel7Layout.setVerticalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 439, Short.MAX_VALUE)
-            .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel7Layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jPanelEmptyList, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
-        );
+        jPanel7.add(jPanelEmptyList, java.awt.BorderLayout.CENTER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -371,6 +361,19 @@ public class MainScreen extends javax.swing.JFrame {
         
         //taskdDialogScreen.setProject(null);
         taskdDialogScreen.setVisible(true);
+        
+        taskdDialogScreen.addWindowListener(new WindowAdapter(){
+            // quando a janela taskDialogScreen for fechada
+            public void windowClosed(WindowEvent e) {
+                // vamos pegar o indice do projeto selecionado
+                int projectindex = jListProjects.getSelectedIndex();
+                // Vai pegar o objeto de projeto que está dentro do project model
+                Project project = (Project) projectModel.get(projectIndex);
+                // e vamos carregar as tarefas desse projeto que está sendo selecionado
+                loadTasks(project.getId());
+            }
+        });
+        
     }//GEN-LAST:event_jLabelTasksAddMouseClicked
 
     private void jTableTasksMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableTasksMouseClicked
@@ -471,8 +474,15 @@ public class MainScreen extends javax.swing.JFrame {
         jTableTasks.getTableHeader().setBackground(new Color(0, 153, 102));
         jTableTasks.getTableHeader().setForeground(new Color(255, 255, 255));
         
-        // criando um sort automático para as colunas da table
-        jTableTasks.setAutoCreateRowSorter(true);
+        // pegando meu componente, e vou pegar sua column model 2
+        // que é a segunda coluna da nossa jtable
+        // e mudamos o renderizador, que é o que foi criado na pasta utils
+        jTableTasks.getColumnModel().getColumn(2).setCellRenderer(new DeadlineColumnCellRederer());
+        
+        // buttonColumn é um objeto
+        jTableTasks.getColumnModel().getColumn(4).setCellRenderer(new ButtonColumnCellRederer("edit"));
+        
+        jTableTasks.getColumnModel().getColumn(5).setCellRenderer(new ButtonColumnCellRederer("delete"));
     }
     
     public void initDataController() {
