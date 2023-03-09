@@ -19,10 +19,6 @@ A aplicação consiste em um gerenciador de tarefas básicos a fim de utilizar t
 ![todoapp](https://user-images.githubusercontent.com/77124683/194144566-1688dddc-49ed-49a1-8570-2f529e575420.png)
 <img alt="login" src="https://user-images.githubusercontent.com/77124683/194446747-2a1875f8-2c17-4797-841e-23a6cb21ba5a.png" width="50%">
 
-### Estrutura do Projeto
-
-![image](https://user-images.githubusercontent.com/77124683/194446990-720331f9-5c29-4d7b-9d4f-b3bca4b85a3a.png)
-
 #### Extras
 
 Como desafio, foi sugerido a função de editar tarefas ao clicar no botão, que foi implementado.
