@@ -41,7 +41,7 @@ public class TaskTableModel extends AbstractTableModel{
     }
     
     @Override // esse método ja existe, vamos sobrescrevelo
-    // restorna a classe do componente que está em determinado coluna
+    // retorna a classe do componente que está em determinado coluna
     // se é string, bool, int
     public Class<?> getColumnClass(int columnIndex){
         // verificando se a lista de tarefa é vazia

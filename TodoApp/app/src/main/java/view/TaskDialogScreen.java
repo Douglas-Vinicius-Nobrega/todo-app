@@ -43,8 +43,8 @@ public class TaskDialogScreen extends javax.swing.JDialog {
         jLabelDescription = new javax.swing.JLabel();
         jScrollPaneDescription = new javax.swing.JScrollPane();
         jTextAreaDescription = new javax.swing.JTextArea();
-        jLabelNotes = new javax.swing.JLabel();
         jLabeldeadline = new javax.swing.JLabel();
+        jLabelNotes = new javax.swing.JLabel();
         jFormattedTextFielddeadline = new javax.swing.JFormattedTextField();
         jScrollPaneNotes = new javax.swing.JScrollPane();
         jTextAreaNotes = new javax.swing.JTextArea();
@@ -105,11 +105,11 @@ public class TaskDialogScreen extends javax.swing.JDialog {
         jTextAreaDescription.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
         jScrollPaneDescription.setViewportView(jTextAreaDescription);
 
-        jLabelNotes.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabelNotes.setText("Prazo");
-
         jLabeldeadline.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabeldeadline.setText("Notas");
+        jLabeldeadline.setText("Prazo");
+
+        jLabelNotes.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabelNotes.setText("Notas");
 
         jFormattedTextFielddeadline.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT))));
 
@@ -134,8 +134,8 @@ public class TaskDialogScreen extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jPanelTaskLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPaneDescription, javax.swing.GroupLayout.DEFAULT_SIZE, 382, Short.MAX_VALUE)
-                    .addComponent(jLabelNotes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabeldeadline, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabelNotes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanelTaskLayout.createSequentialGroup()
                         .addGroup(jPanelTaskLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jFormattedTextFielddeadline)
@@ -165,13 +165,13 @@ public class TaskDialogScreen extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                 .addComponent(jScrollPaneDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabelNotes)
+                .addComponent(jLabeldeadline)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jFormattedTextFielddeadline, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabelDeadlineError)
                 .addGap(24, 24, 24)
-                .addComponent(jLabeldeadline)
+                .addComponent(jLabelNotes)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPaneNotes, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -214,9 +214,8 @@ public class TaskDialogScreen extends javax.swing.JDialog {
                task.setIsCompleted(false);
 
                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-               Date deadline = null;
+               Date deadline = dateFormat.parse(jFormattedTextFielddeadline.getText());
 
-               deadline = dateFormat.parse(jFormattedTextFielddeadline.getText());
                task.setDeadline(deadline);
                controller.save(task);
                JOptionPane.showMessageDialog(rootPane, "Tarefa Salva com sucesso");

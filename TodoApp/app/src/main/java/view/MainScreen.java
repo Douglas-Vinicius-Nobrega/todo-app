@@ -10,8 +10,12 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import model.Project;
 import model.Task;
 import util.ButtonColumnCellRederer;
@@ -383,18 +387,30 @@ public class MainScreen extends javax.swing.JFrame {
         // e qual a coluna
         int rowIndex = jTableTasks.rowAtPoint(evt.getPoint());
         int columnIndex = jTableTasks.columnAtPoint(evt.getPoint());
+        Task task = taskModel.getTasks().get(rowIndex);
         
         switch(columnIndex) {
             // quando o evento ocorrer na coluna 3
             case 3:
                 // aqui vamos buscar a tarefa da linha que foi clicada
-                Task task = taskModel.getTasks().get(rowIndex);
                 taskController.update(task);
                 break;
             case 4:
+                TaskEdit taskEdit = new TaskEdit();
+                taskEdit.setVisible(true);
                 break;
             case 5:
-                break;    
+            {
+                try {
+                    taskController.removeById(task.getId());
+                } catch (SQLException ex) {
+                    Logger.getLogger(MainScreen.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+                taskModel.getTasks().remove(task);                
+                int projectIndex = jListProjects.getSelectedIndex();
+                Project project = (Project) projectModel.get(projectIndex);
+                loadTasks(project.getId());
         }
     }//GEN-LAST:event_jTableTasksMouseClicked
 
