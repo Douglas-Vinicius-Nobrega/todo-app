@@ -33,8 +33,6 @@ Certifique-se que as depedências do pom.xml foram baixadas e adicionadas ao pro
 
 Inicie MainScreen.java
 
-![image](https://user-images.githubusercontent.com/77124683/194457235-3f61fd6c-3428-45c1-9812-60fabe03fe20.png)
-
 Configurar variáveis de acordo com as configurações do seu SGBD
 ```
     public static final String DRIVER = "com.mysql.jdbc.Driver";
