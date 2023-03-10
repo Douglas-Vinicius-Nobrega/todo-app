@@ -17,7 +17,7 @@ A aplicação consiste em um gerenciador de tarefas básicos a fim de utilizar t
 ### Diagrama ER e Classe
 
 ![todoapp](https://user-images.githubusercontent.com/77124683/194144566-1688dddc-49ed-49a1-8570-2f529e575420.png)
-<img alt="login" src="https://user-images.githubusercontent.com/77124683/194446747-2a1875f8-2c17-4797-841e-23a6cb21ba5a.png" width="50%">
+
 
 #### Extras
 
